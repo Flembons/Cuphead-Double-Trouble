@@ -93,6 +93,7 @@ namespace DoubleBosses
         {
             self.Ending = true;
             self.OnLevelEnd();
+
             // instead of checking PlayerMode, I can check if PlayerOne has a LevelPlayerController or PlanePlayerController component
             GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
 
