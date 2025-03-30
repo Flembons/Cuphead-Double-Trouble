@@ -13,6 +13,10 @@ WARNING: Cuphead was never meant to have two bosses in a single fight, so some f
 * **Base Health**
   * Set your starting health between 1 and 9 to make fights easier or more difficult
   * You can also turn on God Mode by setting your health to ∞
+ 
+I'd recommend keeping the Boss Type set to SAME at first, since that was why I originally made this mod. I wanted to see if it was possible to beat every boss if they were duplicated. And it is possible! All 40 bosses can be beaten when duplicated! Some are much harder than others and require a lot of practice and patience, but it is possible to beat every single one. 
+
+Now for RANDOM or CHOOSE, there's no guarantee the bosses will actually be beatable. These options were added just for fun, in case you wanted to see certain "what if" combinations of bosses, i.e. Saltbaker and The Devil. 
 
 How to Install
 ===
