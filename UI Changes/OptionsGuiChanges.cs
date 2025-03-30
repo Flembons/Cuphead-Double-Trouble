@@ -51,27 +51,29 @@ namespace DoubleBosses
                     self.bigNoise.SetActive(true);
                     if (DoubleBossesManager.doubleBossOptions)
                     {
+                        GameObject audioMenu = GameObject.Find("AudioMenu");
+                        GameObject.Find("BigCard").transform.localScale = new Vector3(1.15f, 1, 1);
                         self.audioObjectButtons[0].options = DoubleBossesManager.bossSelectionOptions;
                         self.audioObjectButtons[0].updateSelection(DoubleBossesManager.db_bossSelectionType);
                         self.audioObjectButtons[0].wrap = true;
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = "BOSS TYPE:";
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = "BOSS TYPE:";
                         self.audioObjectButtons[1].options = DoubleBossesManager.bossChoice;
                         self.audioObjectButtons[1].updateSelection(DoubleBossesManager.db_bossSelection);
                         self.audioObjectButtons[1].wrap = true;
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false);
                         if (self.audioObjectButtons[0].selection == 2)
                         {
-                            GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                            GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                            audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                            audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true);
                         }
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SELECTED BOSS:";
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SELECTED BOSS:";
                         self.audioObjectButtons[2].options = DoubleBossesManager.bossStartingHealthOption;
                         self.audioObjectButtons[2].updateSelection(DoubleBossesManager.db_startingHealth);
                         self.audioObjectButtons[2].wrap = true;
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "BASE HEALTH:";
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(false);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "BASE HEALTH:";
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(false);
                     }
                     self.currentItems.AddRange(self.audioObjectButtons);
                     break;
@@ -122,30 +124,32 @@ namespace DoubleBosses
             {
                 if (DoubleBossesManager.doubleBossOptions && self.state == OptionsGUI.State.Audio)
                 {
+                    GameObject audioMenu = GameObject.Find("AudioMenu");
+                    GameObject.Find("BigCard").transform.localScale = new Vector3(1, 1, 1);
                     DoubleBossesManager.doubleBossOptions = false;
                     self.audioObjectButtons[0].options = self.slider;
                     self.audioObjectButtons[0].wrap = false;
                     self.audioObjectButtons[0].updateSelection(self.floatToSliderIndex(SettingsData.Data.masterVolume, -48f, 0f));
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = "MASTER VOLUME:";
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = "MASTER VOLUME:";
                     self.audioObjectButtons[1].options = self.slider;
                     self.audioObjectButtons[1].wrap = false;
                     self.audioObjectButtons[1].updateSelection(self.floatToSliderIndex(SettingsData.Data.sFXVolume, -48f, 0f));
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SFX VOLUME:";
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SFX VOLUME:";
                     self.audioObjectButtons[2].options = self.slider;
                     self.audioObjectButtons[2].wrap = false;
                     self.audioObjectButtons[2].updateSelection(self.floatToSliderIndex(SettingsData.Data.musicVolume, -48f, 0f));
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "MUSIC VOLUME:";
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "MUSIC VOLUME:";
                     if (PlayerData.inGame && (PlayerData.Data.unlockedBlackAndWhite || PlayerData.Data.unlocked2Strip || PlayerData.Data.unlockedChaliceRecolor))
                     {
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.GetComponent<Text>().text = "VINTAGE MODE:";
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.GetComponent<Text>().text = "VINTAGE MODE:";
                         self.audioObjectButtons[3].updateSelection((!SettingsData.Data.vintageAudioEnabled) ? 0 : 1);
                     }
                     else
                     {
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(false);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(false);
                     }
                     self.ToPauseMenu();
                     return;
@@ -225,32 +229,34 @@ namespace DoubleBosses
             {
                 if (DoubleBossesManager.doubleBossOptions)
                 {
+                    GameObject audioMenu = GameObject.Find("AudioMenu");
+                    GameObject.Find("BigCard").transform.localScale = new Vector3(1, 1, 1);
                     DoubleBossesManager.doubleBossOptions = false;
                     self.audioObjectButtons[0].options = self.slider;
                     self.audioObjectButtons[0].wrap = false;
                     self.audioObjectButtons[0].updateSelection(self.floatToSliderIndex(SettingsData.Data.masterVolume, -48f, 0f));
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = "MASTER VOLUME:";
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = "MASTER VOLUME:";
                     self.audioObjectButtons[1].options = self.slider;
                     self.audioObjectButtons[1].wrap = false;
                     self.audioObjectButtons[1].updateSelection(self.floatToSliderIndex(SettingsData.Data.sFXVolume, -48f, 0f));
-                    GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SFX VOLUME:";
+                    audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SFX VOLUME:";
                     self.audioObjectButtons[2].options = self.slider;
                     self.audioObjectButtons[2].wrap = false;
                     self.audioObjectButtons[2].updateSelection(self.floatToSliderIndex(SettingsData.Data.musicVolume, -48f, 0f));
-                    GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "MUSIC VOLUME:";
+                    audioMenu.transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "MUSIC VOLUME:";
                     if (PlayerData.inGame && (PlayerData.Data.unlockedBlackAndWhite || PlayerData.Data.unlocked2Strip || PlayerData.Data.unlockedChaliceRecolor))
                     {
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.GetComponent<Text>().text = "VINTAGE MODE:";
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.GetComponent<Text>().text = "VINTAGE MODE:";
                         self.audioObjectButtons[3].updateSelection((!SettingsData.Data.vintageAudioEnabled) ? 0 : 1);
                     }
                     else
                     {
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(false);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(3).gameObject.SetActive(false);
                     }
                     self.ToPauseMenu();
                     return;
@@ -268,15 +274,16 @@ namespace DoubleBosses
                 {
                     case 0:
                         DoubleBossesManager.db_bossSelectionType = button.selection;
+                        GameObject audioMenu = GameObject.Find("AudioMenu");
                         if (button.selection == 2)
                         {
-                            GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                            GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                            GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SELECTED BOSS:";
+                            audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                            audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                            audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SELECTED BOSS:";
                             return;
                         }
-                        GameObject.Find("AudioMenu").transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                        GameObject.Find("AudioMenu").transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                        audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false);
                         return;
                     case 1:
                         DoubleBossesManager.db_bossSelection = button.selection;
