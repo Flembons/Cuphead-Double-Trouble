@@ -4,6 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 using UnityEngine;
 using Blender.Patching;
 using Blender.Utility;
+using DoubleBosses.Boss_Changes;
 
 namespace DoubleBosses
 {
@@ -16,13 +17,19 @@ namespace DoubleBosses
         {
             // Plugin startup logic
             doubleBossManager = new DoubleBossesManager();
+
             new DicePalaceChanges().Init();
             new OptionsGuiChanges().Init();
             new LevelChanges().Init();
             new LevelPauseGUIChanges().Init();
             new LevelGameOverGUIChanges().Init();
             new PlayerStatsManagerChanges().Init();
-            new VariousBossChanges().Init();
+            new AirplaneLevelChanges().Init();
+            new FlyingCowboyLevelChanges().Init();
+            new FrogsLevelChanges().Init();
+            new OldManLevelChanges().Init();
+            new SaltbakerChanges().Init();
+            new SnowCultChanges().Init();
             new RumRunnersChanges().Init();
             new CameraChanges().Init();
             new SceneLoaderChanges().Init();
