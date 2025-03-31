@@ -97,20 +97,19 @@ namespace DoubleBosses
             // instead of checking PlayerMode, I can check if PlayerOne has a LevelPlayerController or PlanePlayerController component
             GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
 
-            if (player[0].GetComponent<LevelPlayerController>() != null)
+            if (player.Length > 0 && player[0].GetComponent<LevelPlayerController>() != null)
             {
                 LevelPlayerWeaponManager[] wepManagers = (LevelPlayerWeaponManager[])UnityEngine.Resources.FindObjectsOfTypeAll(typeof(LevelPlayerWeaponManager));
                 wepManagers[0].OnLevelEnd();
-                PlayerManager.SetPlayerCanJoin(PlayerId.PlayerTwo, false, false);
-                PlayerManager.ClearJoinPrompt();
             }
-            else if (self.playerMode == PlayerMode.Plane)
+            else if (player.Length > 0 && self.playerMode == PlayerMode.Plane)
             {
                 PlanePlayerWeaponManager[] planeManagers = (PlanePlayerWeaponManager[])UnityEngine.Resources.FindObjectsOfTypeAll(typeof(PlanePlayerWeaponManager));
                 planeManagers[0].OnLevelEnd();
-                PlayerManager.SetPlayerCanJoin(PlayerId.PlayerTwo, false, false);
-                PlayerManager.ClearJoinPrompt();
             }
+
+            PlayerManager.SetPlayerCanJoin(PlayerId.PlayerTwo, false, false);
+            PlayerManager.ClearJoinPrompt();
         }
     }
 }
