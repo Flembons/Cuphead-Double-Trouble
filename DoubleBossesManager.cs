@@ -8,7 +8,7 @@ using Blender;
 namespace DoubleBosses
 {
     /*
-     * This class initializes all of the settings for spawning two bosses. By default, the same boss will be spawned with the player at a base health of 3.
+     * This class initializes all of the settings for spawning two bosses. By default, the same boss will be spawned and the player will have a base health of 3.
      * The manager also keeps track of certain information like what levels to load when loading two bosses, whether the player is restarting a level, and
      * all of the configuration settings from the Mod Options menu.
      */
