@@ -8,8 +8,13 @@ namespace DoubleBosses.Boss_Changes
 {
     internal class FrogsLevelChanges
     {
+        public static int shortFrogCheck;
+        public static int tallFrogCheck;
+
         public void Init()
         {
+            tallFrogCheck = 0;
+            shortFrogCheck = 0;
             On.FrogsLevelTall.Awake += Awake;
             On.FrogsLevelShort.Awake += Awake;
             On.FrogsLevelShort.StartMorph += StartMorph;
@@ -19,35 +24,36 @@ namespace DoubleBosses.Boss_Changes
         protected void Awake(On.FrogsLevelTall.orig_Awake orig, FrogsLevelTall self)
         {
             orig(self);
-            var tallFrogs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Frog_Tall").ToArray();
-            if (DoubleBossesManager.db_tallFrogCheck == 1)
+            if (tallFrogCheck == 1)
             {
+                var tallFrogs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Frog_Tall").ToArray();
                 tallFrogs[0].name = "Frog_Tall_0";
                 tallFrogs[tallFrogs.Length - 1].name = "Frog_Tall_1";
-                DoubleBossesManager.db_tallFrogCheck = 0;
+                tallFrogCheck = 0;
             }
             else
             {
-                DoubleBossesManager.db_tallFrogCheck++;
+                tallFrogCheck++;
             }
         }
 
         protected void Awake(On.FrogsLevelShort.orig_Awake orig, FrogsLevelShort self)
         {
             orig(self);
-            var shortFrogs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Frog_Short").ToArray();
-            var morphedFrogs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Frog_Morphed").ToArray();
-            if (DoubleBossesManager.db_shortFrogCheck == 1)
+
+            if (shortFrogCheck == 1)
             {
+                var shortFrogs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Frog_Short").ToArray();
+                var morphedFrogs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Frog_Morphed").ToArray();
                 shortFrogs[0].name = "Frog_Short_0";
                 shortFrogs[shortFrogs.Length - 1].name = "Frog_Short_1";
                 morphedFrogs[0].name = "Frog_Morphed_0";
                 morphedFrogs[morphedFrogs.Length - 1].name = "Frog_Morphed_1";
-                DoubleBossesManager.db_shortFrogCheck = 0;
+                shortFrogCheck = 0;
             }
             else
             {
-                DoubleBossesManager.db_shortFrogCheck++;
+                shortFrogCheck++;
             }
         }
 
