@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace DoubleBosses
 {
+    /*
+     * This class alters the Game Over GUI that is seen when a player dies during a fight. The options in the menu will be 
+     * changed depending on how the mod options are configured. This class also fixes an issue with the Retry button for King Dice's
+     * fight. Restarting in a miniboss fight will restart the entire King Dice fight properly now.
+     */
     public class LevelGameOverGUIChanges
     {
         public void Init()
@@ -35,6 +40,7 @@ namespace DoubleBosses
             switch (self.selection)
             {
                 case 0:
+                    // Tell the DBManager the player is restarting
                     DoubleBossesManager.db_retrying = true;
                     self.Retry();
                     AudioManager.Play("level_menu_card_down");
@@ -44,6 +50,7 @@ namespace DoubleBosses
                     AudioManager.Play("level_menu_card_down");
                     break;
                 case 2:
+                    // If bossSelectionType is set to Random, this option will instead load a new boss
                     if (DoubleBossesManager.db_bossSelectionType == 1)
                     {
                         DoubleBossesManager.db_retryingNewBoss = true;
@@ -51,6 +58,7 @@ namespace DoubleBosses
                         AudioManager.Play("level_menu_card_down");
 
                     }
+                    // otherwise, this option will be Quit Game, which, you guessed it, quits the game
                     else
                     {
                         self.QuitGame();
@@ -66,11 +74,15 @@ namespace DoubleBosses
             {
                 return;
             }
+
+            // Set the third menu option to be "RETRY WITH NEW BOSS" if Random bosses are on
             if (SceneLoader.SceneName.StartsWith("scene_level") && SceneLoader.CurrentLevel != Levels.House && DoubleBossesManager.db_bossSelectionType == 1)
             {
                 self.menuItems[2].text = "RETRY WITH NEW BOSS";
                 self.menuItems[2].gameObject.SetActive(true);
             }
+
+            // Ignore the "R-Control" option if Random bosses are on
             if (DoubleBossesManager.db_bossSelectionType != 1 && self.selection == 2 && Level.Current != null && Level.Current.CurrentLevel == Levels.Airplane && (self.getButtonDown(CupheadButton.Accept) || self.getButtonDown(CupheadButton.MenuLeft) || self.getButtonDown(CupheadButton.MenuRight)))
             {
                 AudioManager.Play("level_menu_card_down");
@@ -110,6 +122,8 @@ namespace DoubleBosses
 
         public void Retry(On.LevelGameOverGUI.orig_Retry orig, LevelGameOverGUI self)
         {
+            // If the reload takes place in a Dice Palace miniboss, the miniboss would be reloaded instead of the main King Dice arena
+            // this check ensures that King Dice's fight works like it does in the base game
             if (Level.IsDicePalace && !Level.IsDicePalaceMain)
             {
                 DoubleBossesManager.db_retrying = false;

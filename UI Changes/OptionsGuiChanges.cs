@@ -11,6 +11,11 @@ namespace DoubleBosses
 {
     public class OptionsGuiChanges
     {
+        /*
+         * This class adds the configuration options for the mod. The bossSelectionType can be set to SAME, RANDOM, or CHOOSE. When CHOOSE is selected,
+         * a sub-menu will appear allowing you to choose a specific boss. There is also an option for Base Health that sets the player's starting health
+         * to a value between 1 and 9. There is also an option for ∞, which makes the player invulnerable.
+         */
         public void Init()
         {
             On.OptionsGUI.ToggleSubMenu += ToggleSubMenu;
@@ -42,6 +47,7 @@ namespace DoubleBosses
                     self.bigNoise.SetActive(true);
                     self.currentItems.AddRange(self.visualObjectButtons);
                     break;
+                // The Mod Options menu hijacks the Audio menu, so all of the Mod Options menu is handled here
                 case OptionsGUI.State.Audio:
                     self.mainObject.SetActive(false);
                     self.visualObject.SetActive(false);
@@ -49,6 +55,8 @@ namespace DoubleBosses
                     self.languageObject.SetActive(false);
                     self.bigCard.SetActive(true);
                     self.bigNoise.SetActive(true);
+
+                    // If "Mod Options" was selected, rename all of the options in the audio menu to reflect the current mod configuration
                     if (DoubleBossesManager.doubleBossOptions)
                     {
                         GameObject audioMenu = GameObject.Find("AudioMenu");
@@ -122,6 +130,7 @@ namespace DoubleBosses
             }
             else if (self.GetButtonDown(CupheadButton.Pause) || self.GetButtonDown(CupheadButton.Cancel))
             {
+                // When the player hits Pause or Escape in the Mod Options menu, rename all of the Audio buttons back to their default values
                 if (DoubleBossesManager.doubleBossOptions && self.state == OptionsGUI.State.Audio)
                 {
                     GameObject audioMenu = GameObject.Find("AudioMenu");
@@ -227,6 +236,7 @@ namespace DoubleBosses
             AudioManager.Play("level_menu_select");
             if (self.verticalSelection == 4)
             {
+                // When the player hits Back in the Mod Options menu, rename all of the Audio buttons back to their default values
                 if (DoubleBossesManager.doubleBossOptions)
                 {
                     GameObject audioMenu = GameObject.Find("AudioMenu");
@@ -246,6 +256,8 @@ namespace DoubleBosses
                     self.audioObjectButtons[2].wrap = false;
                     self.audioObjectButtons[2].updateSelection(self.floatToSliderIndex(SettingsData.Data.musicVolume, -48f, 0f));
                     audioMenu.transform.GetChild(1).gameObject.transform.GetChild(2).gameObject.GetComponent<Text>().text = "MUSIC VOLUME:";
+
+                    // Ensure that "Vintage Mode" isn't accidentally available if the player hasn't unlocked it yet
                     if (PlayerData.inGame && (PlayerData.Data.unlockedBlackAndWhite || PlayerData.Data.unlocked2Strip || PlayerData.Data.unlockedChaliceRecolor))
                     {
                         audioMenu.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.SetActive(true);
@@ -267,6 +279,7 @@ namespace DoubleBosses
 
         private void AudioHorizontalSelect(On.OptionsGUI.orig_AudioHorizontalSelect orig, OptionsGUI self, OptionsGUI.Button button)
         {
+            // Handle the player's input and change the Mod Options text to reflect that input
             if (DoubleBossesManager.doubleBossOptions)
             {
                 self.MenuSelectSound();
@@ -275,6 +288,7 @@ namespace DoubleBosses
                     case 0:
                         DoubleBossesManager.db_bossSelectionType = button.selection;
                         GameObject audioMenu = GameObject.Find("AudioMenu");
+                        // Activate the boss selection menu if CHOOSE is the current boss type
                         if (button.selection == 2)
                         {
                             audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
@@ -282,6 +296,7 @@ namespace DoubleBosses
                             audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>().text = "SELECTED BOSS:";
                             return;
                         }
+                        // otherwise, hide this menu
                         audioMenu.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
                         audioMenu.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(false);
                         return;
@@ -337,10 +352,14 @@ namespace DoubleBosses
         public void ShowMainOptionMenu(On.OptionsGUI.orig_ShowMainOptionMenu orig, OptionsGUI self)
         {
             self.state = OptionsGUI.State.MainOptions;
+
+            // Set the GUI state to Audio when exiting from the Mod Options menu
+            // Otherwise, the Audio options would not be renamed properly
             if (DoubleBossesManager.doubleBossOptions)
             {
                 self.state = OptionsGUI.State.Audio;
             }
+
             self.ToggleSubMenu(self.state);
             self.optionMenuOpen = true;
             self.verticalSelection = 0;

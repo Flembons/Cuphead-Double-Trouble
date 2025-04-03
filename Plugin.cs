@@ -9,13 +9,13 @@ using DoubleBosses.Boss_Changes;
 namespace DoubleBosses
 {
     [BepInPlugin("CupheadDoubleBosses", "DoubleBosses", "1.0.0")]
+
     public class Plugin : BaseUnityPlugin
     {
         public static DoubleBossesManager doubleBossManager;
 
         private void Awake()
         {
-            // Plugin startup logic
             doubleBossManager = new DoubleBossesManager();
 
             new DicePalaceChanges().Init();
