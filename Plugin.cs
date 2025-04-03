@@ -10,6 +10,12 @@ namespace DoubleBosses
 {
     [BepInPlugin("CupheadDoubleBosses", "DoubleBosses", "1.0.0")]
 
+    /*
+     * This class is the main class for this mod that creates the DoubleBossesManager and 
+     * initializes all of the changes made to each existing class in the game. Each class that
+     * has been changed calls an Init function which hooks into functions from that class. You can
+     * see the details of these function hooks in the corresponding .cs files
+     */
     public class Plugin : BaseUnityPlugin
     {
         public static DoubleBossesManager doubleBossManager;
