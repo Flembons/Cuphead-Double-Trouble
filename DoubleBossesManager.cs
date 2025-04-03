@@ -7,9 +7,14 @@ using Blender;
 
 namespace DoubleBosses
 {
+    /*
+     * This class initializes all of the settings for spawning two bosses. By default, the same boss will be spawned with the player at a base health of 3.
+     * The manager also keeps track of certain information like what levels to load when loading two bosses, whether the player is restarting a level, and
+     * all of the configuration settings from the Mod Options menu.
+     */
+
     public class DoubleBossesManager
     {
-        // These came from SceneLoader
         public static bool db_randomBosses;
         public static string db_firstLevel;
         public static Levels db_secondLevel;
@@ -20,23 +25,16 @@ namespace DoubleBosses
         public static int db_startingHealth;
         public static bool db_infiniteHealth;
         public static int db_bossSelectionType;
-        public static bool db_elderKettle;
 
-        // This came from LevelPauseGUI
         public static bool doubleBossOptions;
 
-        // These came from OptionsGUI
         public static string[] bossChoice;
         public static int bossSelection;
         public static string[] bossSelectionOptions;
         public static string[] bossYesNoOption;
         public static string[] bossStartingHealthOption;
 
-        public static int db_shortFrogCheck = 0;
-        public static int db_tallFrogCheck = 0;
-
         public DoubleBossesManager() {
-            db_elderKettle = false;
             db_bossSelection = 0;
             db_randomBosses = false;
             db_startingHealth = 2;
@@ -47,6 +45,8 @@ namespace DoubleBosses
             db_firstLevel = "";
             db_secondLevel = Levels.Test;
 
+
+            // Check if the DLC is installed, and adjust the possible levels to only include the base game levels if not
             if (BlenderAPI.HasDLC)
             {
                 db_possibleLevels = new Levels[]
