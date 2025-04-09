@@ -6,6 +6,12 @@ using UnityEngine;
 
 namespace DoubleBosses
 {
+    /*
+     * This class fixes the parallax layers that are used in certain fights. The parallax layers are based on the current camera object,
+     * and when a second scene is spawned in, that camera object is set to the second scene's camera instead of the first scene's. The changes
+     * here fix that issue and cause the parallax layers to work properly
+     */
+
     public class CameraChanges
     {
         public void Init()
@@ -21,6 +27,8 @@ namespace DoubleBosses
             {
                 return;
             }
+
+            // If this is called on the second camera in the scene, bounds will not be defined, so simply return
             if (self.bounds == null)
             {
                 return;
@@ -74,11 +82,14 @@ namespace DoubleBosses
 
         protected virtual void Start(On.ParallaxLayer.orig_Start orig, ParallaxLayer self)
         {
+            // At the beginning of the Glumstone fight, set the parallax layer's camnera to the correct level camera
+            // This needs to be done to fix the camera scrolling during the phase 2 transition
             if (SceneLoader.CurrentLevel == Levels.OldMan)
             {
                 GameObject[] array = GameObject.FindGameObjectsWithTag("MainCamera");
                 self._camera = array[array.Length - 1].GetComponent<CupheadLevelCamera>();
             }
+            // otherwise, set the camera to the current camera as normal
             else
             {
                 self._camera = CupheadLevelCamera.Current;
@@ -86,8 +97,10 @@ namespace DoubleBosses
             self._startPosition = self.transform.position;
             self._cameraStartPosition = self._camera.transform.position;
         }
+
         private void LateUpdate(On.ParallaxLayer.orig_LateUpdate orig, ParallaxLayer self)
         {
+            // Return if this ParallaxLayer's camera object is not set properly
             if (self._camera == null)
             {
                 return;
